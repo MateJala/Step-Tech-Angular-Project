@@ -88,6 +88,27 @@ header {
                                 padding: 2px 6px;
                                 border-radius: var(--radius-full);
                             }
+
+                            &.skeleton-dropdown {
+                                pointer-events: none;
+                                cursor: default;
+                                &:hover {
+                                    background: transparent !important;
+                                    color: inherit !important;
+                                }
+                            }
+                            .skeleton-line {
+                                @extend %shimmer;
+                                height: 12px;
+                                border-radius: var(--radius-full);
+                            }
+                            .skeleton-pill {
+                                @extend %shimmer;
+                                width: 28px;
+                                height: 18px;
+                                border-radius: var(--radius-full);
+                                flex-shrink: 0;
+                            }
                         }
                     }
                 }
@@ -199,8 +220,49 @@ header {
                     padding-left: var(--spacing-2xl);
                     color: var(--text-secondary);
                 }
+                .skeleton-mobile-link {
+                    pointer-events: none;
+                    cursor: default;
+
+                    &:hover {
+                    background: transparent !important;
+                    color: inherit !important;
+                    }
+
+                    .skeleton-line {
+                    @extend %shimmer;
+                    height: 12px;
+                    border-radius: var(--radius-full);
+                    }
+                }
             }
         }
+    }
+}
+
+.error {
+    @include flex(center);
+    flex-direction: column;
+    svg {
+        @include size(64px, 64px);
+        color: var(--error-color);
+        margin-bottom: var(--spacing-xl);
+    }
+    h3 {
+        font-size: var(--font-size-2xl);
+        font-weight: var(--font-weight-semibold);
+        color: var(--text-primary);
+        margin-bottom: var(--spacing-sm);
+        text-align: center;
+    }
+    p {
+        font-size: var(--font-size-md);
+        color: var(--text-secondary);
+        margin-bottom: var(--spacing-xl);
+        max-width: 500px;
+        line-height: 1.5715;
+        text-align: center;
+        word-break: break-all
     }
 }
 
@@ -217,8 +279,6 @@ header {
     }
 }
 
-
-
 @keyframes dropdownFadeIn {
     0% {
         opacity: 0;
@@ -228,4 +288,18 @@ header {
         opacity: 1;
         transform: translateY(0);
     }
+}
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position:  600px 0; }
+}
+%shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--bg-secondary) 25%,
+    var(--bg-tertiary) 50%,
+    var(--bg-secondary) 75%
+  );
+  background-size: 600px 100%;
+  animation: shimmer 1.5s infinite linear;
 }

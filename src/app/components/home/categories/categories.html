@@ -8,54 +8,39 @@
             <a routerLink="/shop" class="view-all-link"> View All <svg _ngcontent-ng-c3873563376="" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline _ngcontent-ng-c3873563376="" points="9 18 15 12 9 6"></polyline></svg></a>
         </div>
         <div class="categories-grid">
-            <div class="category-card" (click)="routerLinkCategory(1)">
-                <div class="category-icon">
-                    <img src="https://elements-resized.envatousercontent.com/envato-dam-assets-production/EVA/TRX/bf/1a/0c/42/e1/v1_E10/E109SN5P.jpg?w=1600&cf_fit=scale-down&q=85&format=auto&s=bd2d629211560af8a98ab85f6b3cbaa4c914fb4470d186b0e858f47e7f51bda4" alt="Laptops">
+            @if (isLoading()) {
+                @for (skeleton of [1,2,3,4]; track $index) {
+                    <div class="category-card skeleton-card">
+                        <div class="category-icon skeleton-box"></div>
+                        <div class="category-info">
+                            <div class="skeleton-line wide"></div>
+                            <div class="skeleton-line narrow"></div>
+                        </div>
+                        <div class="category-arrow skeleton-box arrow"></div>
+                    </div>
+                }
+            } @else if (error()) {
+                <div class="error">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm-1.5-5.009c0-.867.659-1.491 1.491-1.491.85 0 1.509.624 1.509 1.491 0 .867-.659 1.509-1.509 1.509-.832 0-1.491-.642-1.491-1.509zM11.172 6a.5.5 0 0 0-.499.522l.306 7a.5.5 0 0 0 .5.478h1.043a.5.5 0 0 0 .5-.478l.305-7a.5.5 0 0 0-.5-.522h-1.655z" fill="currentColor"></path></g></svg>
+                    <h3>Something went wrong</h3>
+                    <p>{{error()}}</p>
                 </div>
-                <div class="category-info">
-                    <h3>Laptops</h3>
-                    <span class="product-count">6 products</span>
-                </div>
-                <div class="category-arrow">
-                    <svg _ngcontent-ng-c3873563376="" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line _ngcontent-ng-c3873563376="" x1="5" y1="12" x2="19" y2="12"></line><polyline _ngcontent-ng-c3873563376="" points="12 5 19 12 12 19"></polyline></svg>
-                </div>
-            </div>
-            <div class="category-card" (click)="routerLinkCategory(1)">
-                <div class="category-icon">
-                    <img src="https://elements-resized.envatousercontent.com/envato-dam-assets-production/EVA/TRX/bf/1a/0c/42/e1/v1_E10/E109SN5P.jpg?w=1600&cf_fit=scale-down&q=85&format=auto&s=bd2d629211560af8a98ab85f6b3cbaa4c914fb4470d186b0e858f47e7f51bda4" alt="Laptops">
-                </div>
-                <div class="category-info">
-                    <h3>Laptops</h3>
-                    <span class="product-count">6 products</span>
-                </div>
-                <div class="category-arrow">
-                    <svg _ngcontent-ng-c3873563376="" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line _ngcontent-ng-c3873563376="" x1="5" y1="12" x2="19" y2="12"></line><polyline _ngcontent-ng-c3873563376="" points="12 5 19 12 12 19"></polyline></svg>
-                </div>
-            </div>
-            <div class="category-card" (click)="routerLinkCategory(1)">
-                <div class="category-icon">
-                    <img src="https://elements-resized.envatousercontent.com/envato-dam-assets-production/EVA/TRX/bf/1a/0c/42/e1/v1_E10/E109SN5P.jpg?w=1600&cf_fit=scale-down&q=85&format=auto&s=bd2d629211560af8a98ab85f6b3cbaa4c914fb4470d186b0e858f47e7f51bda4" alt="Laptops">
-                </div>
-                <div class="category-info">
-                    <h3>Laptops</h3>
-                    <span class="product-count">6 products</span>
-                </div>
-                <div class="category-arrow">
-                    <svg _ngcontent-ng-c3873563376="" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line _ngcontent-ng-c3873563376="" x1="5" y1="12" x2="19" y2="12"></line><polyline _ngcontent-ng-c3873563376="" points="12 5 19 12 12 19"></polyline></svg>
-                </div>
-            </div>
-            <div class="category-card" (click)="routerLinkCategory(1)">
-                <div class="category-icon">
-                    <img src="https://elements-resized.envatousercontent.com/envato-dam-assets-production/EVA/TRX/bf/1a/0c/42/e1/v1_E10/E109SN5P.jpg?w=1600&cf_fit=scale-down&q=85&format=auto&s=bd2d629211560af8a98ab85f6b3cbaa4c914fb4470d186b0e858f47e7f51bda4" alt="Laptops">
-                </div>
-                <div class="category-info">
-                    <h3>Laptops</h3>
-                    <span class="product-count">6 products</span>
-                </div>
-                <div class="category-arrow">
-                    <svg _ngcontent-ng-c3873563376="" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line _ngcontent-ng-c3873563376="" x1="5" y1="12" x2="19" y2="12"></line><polyline _ngcontent-ng-c3873563376="" points="12 5 19 12 12 19"></polyline></svg>
-                </div>
-            </div>
+            } @else {
+                @for (category of featuredCategories(); track $index) {
+                    <div class="category-card" (click)="routerLinkCategory(category.id)">
+                        <div class="category-icon">
+                            <img [src]="category.imageUrl" [alt]="category.name">
+                        </div>
+                        <div class="category-info">
+                            <h3>{{category.name}}</h3>
+                            <span class="product-count">{{category.productCount}} products</span>
+                        </div>
+                        <div class="category-arrow">
+                            <svg _ngcontent-ng-c3873563376="" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line _ngcontent-ng-c3873563376="" x1="5" y1="12" x2="19" y2="12"></line><polyline _ngcontent-ng-c3873563376="" points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+                    </div>
+                }
+            }
         </div>
     </div>
 </section>

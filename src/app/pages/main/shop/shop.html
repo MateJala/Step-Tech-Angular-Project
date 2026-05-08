@@ -15,7 +15,7 @@
     <div class="shop-content">
         <div class="container">
             <div class="shop-layout">
-                <aside class="filters-sidebar" [ngStyle]="{transform: !mobileFilterBtn() ? 'translate(0)' :''}">
+                <aside class="filters-sidebar" [ngStyle]="{transform: mobileFilterBtn() ? 'translate(0)' :''}">
                     <div class="sidebar-header">
                         <h3>Filters</h3>
                         <button class="close-filters" (click)="mobileFitler()">
@@ -26,47 +26,23 @@
                         <div class="filter-group">
                             <h4 class="filter-title">Categories</h4>
                             <div class="filter-options">
-                                <!--@FOR for category filtering-->
-                                <label class="filter-option">
-                                    <input type="radio" name="category" value="1" [checked]="categoryQueryParams === 1" (change)="selectCategory(1)">
-                                    <span class="option-label">Laptops</span>
-                                    <span class="option-count">6</span>
-                                </label>
-                                <label class="filter-option">
-                                    <input type="radio" name="category" value="1" [checked]="categoryQueryParams === 1" (change)="selectCategory(1)">
-                                    <span class="option-label">Laptops</span>
-                                    <span class="option-count">6</span>
-                                </label>
-                                <label class="filter-option">
-                                    <input type="radio" name="category" value="1" [checked]="categoryQueryParams === 1" (change)="selectCategory(1)">
-                                    <span class="option-label">Laptops</span>
-                                    <span class="option-count">6</span>
-                                </label>
-                                <label class="filter-option">
-                                    <input type="radio" name="category" value="1" [checked]="categoryQueryParams === 1" (change)="selectCategory(1)">
-                                    <span class="option-label">Laptops</span>
-                                    <span class="option-count">6</span>
-                                </label>
-                                <label class="filter-option">
-                                    <input type="radio" name="category" value="1" [checked]="categoryQueryParams === 1" (change)="selectCategory(1)">
-                                    <span class="option-label">Laptops</span>
-                                    <span class="option-count">6</span>
-                                </label>
-                                <label class="filter-option">
-                                    <input type="radio" name="category" value="1" [checked]="categoryQueryParams === 1" (change)="selectCategory(1)">
-                                    <span class="option-label">Laptops</span>
-                                    <span class="option-count">6</span>
-                                </label>
-                                <label class="filter-option">
-                                    <input type="radio" name="category" value="1" [checked]="categoryQueryParams === 1" (change)="selectCategory(1)">
-                                    <span class="option-label">Laptops</span>
-                                    <span class="option-count">6</span>
-                                </label>
-                                <label class="filter-option">
-                                    <input type="radio" name="category" value="1" [checked]="categoryQueryParams === 1" (change)="selectCategory(1)">
-                                    <span class="option-label">Laptops</span>
-                                    <span class="option-count">6</span>
-                                </label>
+                                @if (isCategoriesLoading()){
+                                    @for (skeleton of [1,2,3,4,5]; track $index) {
+                                        <div class="filter-option skeleton-filter">
+                                        <div class="skeleton-radio"></div>
+                                        <div class="skeleton-line" [style.width.%]="40 + (skeleton * 7)"></div>
+                                        <div class="skeleton-pill"></div>
+                                        </div>
+                                    }
+                                }@else {
+                                    @for (category of categories(); track $index) {
+                                        <label class="filter-option">
+                                            <input type="radio" name="category" [value]="category.id" [checked]="categoryQueryParams() === category.id" (change)="selectCategory(category.id)">
+                                            <span class="option-label">{{category.name}}</span>
+                                            <span class="option-count">{{category.productCount}}</span>
+                                        </label>
+                                    }
+                                }
                             </div>
                         </div>
                         <div class="filter-group">
@@ -75,50 +51,20 @@
                                 Min Rating
                             </h4>
                             <div class="rating-options" role="group" aria-label="Minimum star rating filter">
-                                <button type="button" class="rating-option" (click)="selectRating(4)" [class.active]="minRatingQueryParams === 4" aria-label="Minimum rating: 4 & up">
-                                    <span class="stars-display" aria-hidden="true">
-                                        <!--@FOR for star rating-->
-                                        <span class="star star-filled"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon _ngcontent-ng-c2652668144="" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                                        <span class="star star-filled"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon _ngcontent-ng-c2652668144="" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                                        <span class="star star-filled"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon _ngcontent-ng-c2652668144="" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                                        <span class="star star-filled"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon _ngcontent-ng-c2652668144="" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                                        <span class="star"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon _ngcontent-ng-c2652668144="" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                                    </span>
-                                    <span class="rating-text">4 & up</span>
-                                </button>
-                                <button type="button" class="rating-option" (click)="selectRating(3)" [class.active]="minRatingQueryParams === 3" aria-label="Minimum rating: 3 & up">
-                                    <span class="stars-display" aria-hidden="true">
-                                        <!--@FOR for star rating-->
-                                        <span class="star star-filled"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon _ngcontent-ng-c2652668144="" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                                        <span class="star star-filled"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon _ngcontent-ng-c2652668144="" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                                        <span class="star star-filled"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon _ngcontent-ng-c2652668144="" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                                        <span class="star"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon _ngcontent-ng-c2652668144="" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                                        <span class="star"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon _ngcontent-ng-c2652668144="" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                                    </span>
-                                    <span class="rating-text">3 & up</span>
-                                </button>
-                                <button type="button" class="rating-option" (click)="selectRating(2)" [class.active]="minRatingQueryParams === 2" aria-label="Minimum rating: 2 & up">
-                                    <span class="stars-display" aria-hidden="true">
-                                        <!--@FOR for star rating-->
-                                        <span class="star star-filled"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon _ngcontent-ng-c2652668144="" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                                        <span class="star star-filled"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon _ngcontent-ng-c2652668144="" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                                        <span class="star"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon _ngcontent-ng-c2652668144="" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                                        <span class="star"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon _ngcontent-ng-c2652668144="" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                                        <span class="star"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon _ngcontent-ng-c2652668144="" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                                    </span>
-                                    <span class="rating-text">2 & up</span>
-                                </button>
-                                <button type="button" class="rating-option" (click)="selectRating(1)" [class.active]="minRatingQueryParams === 1" aria-label="Minimum rating: 1 & up">
-                                    <span class="stars-display" aria-hidden="true">
-                                        <!--@FOR for star rating-->
-                                        <span class="star star-filled"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon _ngcontent-ng-c2652668144="" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                                        <span class="star"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon _ngcontent-ng-c2652668144="" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                                        <span class="star"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon _ngcontent-ng-c2652668144="" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                                        <span class="star"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon _ngcontent-ng-c2652668144="" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                                        <span class="star"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon _ngcontent-ng-c2652668144="" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                                    </span>
-                                    <span class="rating-text">1 & up</span>
-                                </button>
+                                @for (rating of [4,3,2,1]; track $index) {
+                                    <button type="button" class="rating-option" (click)="selectRating(rating)" [class.active]="minRatingQueryParams() === rating">
+                                        <span class="stars-display" aria-hidden="true">
+                                        @for (star of [1,2,3,4,5]; track $index) {
+                                            <span class="star" [class.star-filled]="star <= rating">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                            </svg>
+                                            </span>
+                                        }
+                                        </span>
+                                        <span class="rating-text">{{ rating }} & up</span>
+                                    </button>
+                                }
                             </div>
                         </div>
                         <div class="filter-group">
@@ -128,12 +74,12 @@
                             <div class="price-inputs">
                                 <div class="price-input">
                                     <label>Min</label>
-                                    <input type="number" placeholder="$0" [value]="minPriceQueryParams ?? ''" (input)="onPriceChange('min', $event)">
+                                    <input type="number" placeholder="$0" [value]="minPriceQueryParams() ?? ''" (input)="onPriceChange('min', $event)">
                                 </div>
                                 <span class="price-seperator">-</span>
                                 <div class="price-input">
                                     <label>Max</label>
-                                    <input type="number" placeholder="$9999" [value]="maxPriceQueryParams ?? ''" (input)="onPriceChange('max', $event)">
+                                    <input type="number" placeholder="$9999" [value]="maxPriceQueryParams() ?? ''" (input)="onPriceChange('max', $event)">
                                 </div>
                             </div>
                         </div>
@@ -142,13 +88,13 @@
                                 Brand
                             </h4>
                             <div class="filter-search">
-                                <input type="text" placeholder="Search brands..." [value]="brandQueryParams ?? ''" (input)="onBrandInput($event)">
+                                <input type="text" placeholder="Search brands..." [value]="brandQueryParams() ?? ''" (input)="onBrandInput($event)">
                             </div>
                         </div>
                         <div class="filter-group">
                             <h4 class="filter-title">Availability</h4>
                             <label class="checkbox">
-                                <input type="checkbox" name="category" [checked]="inStockQueryParams ?? false" (change)="onStockInput($event)">
+                                <input type="checkbox" name="category" [checked]="inStockQueryParams() ?? false" (change)="onStockInput($event)">
                                 <span class="checkbox-mark"></span>
                                 <span class="option-label">In Stock Only</span>
                             </label>
@@ -171,7 +117,7 @@
                             </button>
                             <div class="search-box">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle _ngcontent-ng-c2652668144="" cx="11" cy="11" r="8"></circle><line _ngcontent-ng-c2652668144="" x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                <input type="text" class="search-bar" placeholder="Search products..." [value]="searchQueryParams ?? ''" (input)="onSearchInput($event)">
+                                <input type="text" class="search-bar" placeholder="Search products..." [value]="searchQueryParams() ?? ''" (input)="onSearchInput($event)">
                             </div>
                         </div>
                         <div class="toolbar-right">
@@ -191,41 +137,35 @@
                         </div>
                     </div>
                     <div class="active-filters" [class.active-filters--visible]="hasActiveFilters()">
-                        @if (searchQueryParams) {
-                            <span class="filter-tag">
-                            Search: "{{searchQueryParams}}"
-                            <button (click)="removeFilter('search')">×</button>
-                            </span>
-                        }
-                        @if (categoryQueryParams) {
-                            <span class="filter-tag">
-                            Category: Laptops <!-- category name -->
+                        @if (categoryQueryParams()) {
+                        <span class="filter-tag">
+                            Category: {{ activeCategoryName() }}
                             <button (click)="removeFilter('category')">×</button>
-                            </span>
+                        </span>
                         }
-                        @if (minRatingQueryParams) {
-                            <span class="filter-tag">
-                            Min Rating: {{minRatingQueryParams}}★ & up
+                        @if (minRatingQueryParams()) {
+                        <span class="filter-tag">
+                            Min Rating: {{ minRatingQueryParams() }}★ & up
                             <button (click)="removeFilter('minRating')">×</button>
-                            </span>
+                        </span>
                         }
-                        @if (minPriceQueryParams || maxPriceQueryParams) {
-                            <span class="filter-tag">
-                            Price: ${{minPriceQueryParams ?? '0'}} - ${{maxPriceQueryParams ?? '∞'}}
-                            <button (click)="removeFilter('minPrice')" (click)="removeFilter('maxPrice')">×</button>
-                            </span>
+                        @if (minPriceQueryParams() || maxPriceQueryParams()) {
+                        <span class="filter-tag">
+                            Price: ${{ minPriceQueryParams() ?? '0' }} - ${{ maxPriceQueryParams() ?? '∞' }}
+                            <button (click)="removePriceFilter()">×</button>
+                        </span>
                         }
-                        @if (inStockQueryParams) {
-                            <span class="filter-tag">
+                        @if (inStockQueryParams()) {
+                        <span class="filter-tag">
                             In Stock Only
                             <button (click)="removeFilter('inStock')">×</button>
-                            </span>
+                        </span>
                         }
-                        @if (brandQueryParams) {
-                            <span class="filter-tag">
-                            Brand: {{brandQueryParams}}
+                        @if (brandQueryParams()) {
+                        <span class="filter-tag">
+                            Brand: {{ brandQueryParams() }}
                             <button (click)="removeFilter('brand')">×</button>
-                            </span>
+                        </span>
                         }
                     </div>
                     <div class="products-grid">
@@ -296,6 +236,6 @@
         </div>
     </div>
 </div>
-@if (!mobileFilterBtn()) {
+@if (mobileFilterBtn()) {
     <div class="filters-overlay" (click)="mobileFitler()"></div>
 }

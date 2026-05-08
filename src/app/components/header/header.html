@@ -16,14 +16,24 @@
                     </span>
                     @if (hoverOver()) {
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" (click)="routerLinkCategory(1)"> Laptops <span class="item-count">6</span></a>
-                            <a class="dropdown-item" (click)="routerLinkCategory(2)"> Smartphones <span class="item-count">7</span></a>
-                            <a class="dropdown-item" (click)="routerLinkCategory(3)"> Monitors <span class="item-count">4</span></a>
-                            <a class="dropdown-item" (click)="routerLinkCategory(4)"> Keyboards &amp; Mice <span class="item-count">5</span></a>
-                            <a class="dropdown-item" (click)="routerLinkCategory(5)"> Headphones &amp; Audio <span class="item-count">5</span></a>
-                            <a class="dropdown-item" (click)="routerLinkCategory(6)"> Graphics Cards <span class="item-count">4</span></a>
-                            <a class="dropdown-item" (click)="routerLinkCategory(7)"> Storage <span class="item-count">5</span></a>
-                            <a class="dropdown-item" (click)="routerLinkCategory(8)"> Networking <span class="item-count">4</span></a>
+                            @if (isLoading()) {
+                                @for (skeleton of [1,2,3,4,5]; track $index) {
+                                    <div class="dropdown-item skeleton-dropdown">
+                                    <div class="skeleton-line" [style.width.%]="40 + (skeleton * 7)"></div>
+                                    <div class="skeleton-pill"></div>
+                                    </div>
+                                }
+                            } @else if (error()) {
+                                <div class="error">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm-1.5-5.009c0-.867.659-1.491 1.491-1.491.85 0 1.509.624 1.509 1.491 0 .867-.659 1.509-1.509 1.509-.832 0-1.491-.642-1.491-1.509zM11.172 6a.5.5 0 0 0-.499.522l.306 7a.5.5 0 0 0 .5.478h1.043a.5.5 0 0 0 .5-.478l.305-7a.5.5 0 0 0-.5-.522h-1.655z" fill="currentColor"></path></g></svg>
+                                    <h3>Something went wrong</h3>
+                                    <p>{{error()}}</p>
+                                </div>
+                            } @else {
+                                @for (category of categories(); track $index) {
+                                    <a class="dropdown-item" (click)="routerLinkCategory(category.id)"> {{category.name}} <span class="item-count">{{category.productCount}}</span></a>
+                                }
+                            }
                         </div>
                     }
                 </div>
@@ -50,14 +60,23 @@
             <a routerLink="/shop" class="mobile-nav-link" (click)="mobileMenu()">Shop</a>
             <div _ngcontent-ng-c3188417508="" class="mobile-categories">
                 <span _ngcontent-ng-c3188417508="" class="mobile-nav-label">Categories</span>
-                <a class="mobile-nav-link sub-link" (click)="routerLinkCategory(1)"> Laptops </a>
-                <a class="mobile-nav-link sub-link" (click)="routerLinkCategory(2)"> Smartphones </a>
-                <a class="mobile-nav-link sub-link" (click)="routerLinkCategory(3)"> Monitors </a>
-                <a class="mobile-nav-link sub-link" (click)="routerLinkCategory(4)"> Keyboards &amp; Mice </a>
-                <a class="mobile-nav-link sub-link" (click)="routerLinkCategory(5)"> Headphones &amp; Audio </a>
-                <a class="mobile-nav-link sub-link" (click)="routerLinkCategory(6)"> Graphics Cards </a>
-                <a class="mobile-nav-link sub-link" (click)="routerLinkCategory(7)"> Storage </a>
-                <a class="mobile-nav-link sub-link" (click)="routerLinkCategory(8)"> Networking </a>
+                @if (isLoading()) {
+                    @for (skeleton of [1,2,3,4]; track $index) {
+                        <div class="mobile-nav-link sub-link skeleton-mobile-link">
+                            <div class="skeleton-line" [style.width.%]="30 + (skeleton * 3)"></div>
+                        </div>
+                    }
+                } @else if (error()) {
+                    <div class="error">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm-1.5-5.009c0-.867.659-1.491 1.491-1.491.85 0 1.509.624 1.509 1.491 0 .867-.659 1.509-1.509 1.509-.832 0-1.491-.642-1.491-1.509zM11.172 6a.5.5 0 0 0-.499.522l.306 7a.5.5 0 0 0 .5.478h1.043a.5.5 0 0 0 .5-.478l.305-7a.5.5 0 0 0-.5-.522h-1.655z" fill="currentColor"></path></g></svg>
+                        <h3>Something went wrong</h3>
+                        <p>{{error()}}</p>
+                    </div>
+                } @else {
+                    @for (category of categories(); track $index) {
+                        <a class="mobile-nav-link sub-link" (click)="routerLinkCategory(category.id)"> {{category.name}} </a>
+                    }
+                }
             </div>
             <div class="mobile-divider"></div>
             <a routerLink="/auth/login" class="mobile-nav-link" (click)="mobileMenu()">Sign In</a>

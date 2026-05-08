@@ -91,8 +91,75 @@
                     color: var(--text-tertiary);
                     transition: all var(--transition-base);
                 }
-                
+
+                &.skeleton-card {
+                    pointer-events: none;
+                    cursor: default;
+                    &:hover {
+                        border-color: var(--border-primary) !important;
+                        box-shadow: none !important;
+                        transform: none !important;
+                    }
+                }
+                .skeleton-box {
+                    @extend %shimmer;
+                    &.arrow {
+                        width: 20px;
+                        height: 20px;
+                        border-radius: var(--radius-sm);
+                        flex-shrink: 0;
+                    }
+                }
+                .skeleton-line {
+                    @extend %shimmer;
+                    height: 13px;
+                    margin-bottom: var(--spacing-xs);
+                    border-radius: var(--radius-sm);
+
+                    &.wide   { width: 55%; }
+                    &.narrow { width: 35%; height: 11px; margin-bottom: 0; }
+                }
+            }
+            .error {
+                grid-column: 1/-1;  
+                @include flex(center);
+                flex-direction: column;
+                svg {
+                    @include size(64px, 64px);
+                    color: var(--error-color);
+                    margin-bottom: var(--spacing-xl);
+                }
+                h3 {
+                    font-size: var(--font-size-2xl);
+                    font-weight: var(--font-weight-semibold);
+                    color: var(--text-primary);
+                    margin-bottom: var(--spacing-sm);
+                }
+                p {
+                    font-size: var(--font-size-md);
+                    color: var(--text-secondary);
+                    margin-bottom: var(--spacing-xl);
+                    max-width: 500px;
+                    line-height: 1.5715;
+                    text-align: center;
+                }
             }
         }
     }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position:  600px 0; }
+}
+%shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--bg-secondary) 25%,
+    var(--bg-tertiary) 50%,
+    var(--bg-secondary) 75%
+  );
+  background-size: 600px 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: var(--radius-sm);
 }

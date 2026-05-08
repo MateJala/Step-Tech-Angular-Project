@@ -1,7 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 import { NgStyle } from "@angular/common";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CategoryService } from '../../../services/categoryService';
 
 @Component({
   selector: 'app-header',
@@ -38,5 +40,29 @@ export class Header {
     } else {
       this.hoverOver.set(!this.hoverOver())
     }
+  }
+
+  private categoryService = inject(CategoryService);
+  private destroyRef = inject(DestroyRef);
+
+  public categories = this.categoryService.categories;
+  public isLoading = signal(false);
+  public error = signal<string | null>(null);
+
+  ngOnInit() {
+    this.isLoading.set(true);
+
+    this.categoryService.getCategories()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.isLoading.set(false);
+        },
+        error: (err) => {
+          console.error('[CategoryService] Failed to fetch categories:', err);
+          this.error.set('Failed to load categories. Please try again later.');
+          this.isLoading.set(false);
+        }
+      });
   }
 }

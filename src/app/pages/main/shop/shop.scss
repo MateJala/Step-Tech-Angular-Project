@@ -167,6 +167,37 @@
                                         border-radius: var(--radius-full);
                                     }
                                 }
+                                .skeleton-filter {
+                                    pointer-events: none;
+                                    cursor: default;
+
+                                    &:hover {
+                                    background: transparent !important;
+                                    }
+
+                                    .skeleton-radio {
+                                    @extend %shimmer;
+                                    width: 18px;
+                                    height: 18px;
+                                    border-radius: var(--radius-full);
+                                    flex-shrink: 0;
+                                    }
+
+                                    .skeleton-line {
+                                    @extend %shimmer;
+                                    height: 12px;
+                                    flex: 1;
+                                    border-radius: var(--radius-full);
+                                    }
+
+                                    .skeleton-pill {
+                                    @extend %shimmer;
+                                    width: 28px;
+                                    height: 18px;
+                                    border-radius: var(--radius-full);
+                                    flex-shrink: 0;
+                                    }
+                                }
                             }
                             .rating-options {
                                 display: flex;
@@ -783,4 +814,17 @@
 
 
 
-
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position:  600px 0; }
+}
+%shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--bg-secondary) 25%,
+    var(--bg-tertiary) 50%,
+    var(--bg-secondary) 75%
+  );
+  background-size: 600px 100%;
+  animation: shimmer 1.5s infinite linear;
+}
