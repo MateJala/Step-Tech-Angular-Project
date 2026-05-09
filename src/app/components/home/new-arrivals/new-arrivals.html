@@ -11,10 +11,43 @@
             <a (click)="SortNewset()" class="view-all-link"> View All <svg _ngcontent-ng-c3873563376="" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline _ngcontent-ng-c3873563376="" points="9 18 15 12 9 6"></polyline></svg></a>
         </div>
         <div class="products-grid">
-            <app-product-card [IsNew]="isNew()"></app-product-card>
-            <app-product-card [IsNew]="isNew()"></app-product-card>
-            <app-product-card [IsNew]="isNew()"></app-product-card>
-            <app-product-card [IsNew]="isNew()"></app-product-card>
+            @if (isProductsLoading()) {
+                @for (skeleton of [1,2,3,4]; track $index) {
+                    <div class="skeleton-product-card">
+                        <div class="card-image">
+                            <div class="skeleton skeleton-image"></div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-meta">
+                            <div class="skeleton skeleton-line" style="width: 40%"></div>
+                            <div class="skeleton skeleton-line" style="width: 25%"></div>
+                            </div>
+                            <div class="skeleton skeleton-line" style="width: 85%; height: 16px"></div>
+                            <div class="skeleton skeleton-line" style="width: 65%; height: 16px"></div>
+                            <div class="card-rating">
+                            <div class="skeleton-stars"></div>
+                            <div class="skeleton skeleton-line" style="width: 24px"></div>
+                            </div>
+                            <div style="margin-top: auto">
+                            <div class="skeleton skeleton-line" style="width: 45%; height: 20px"></div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="skeleton-btn"></div>
+                        </div>
+                    </div>
+                } 
+            } @else if (error()) {
+                <div class="error">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm-1.5-5.009c0-.867.659-1.491 1.491-1.491.85 0 1.509.624 1.509 1.491 0 .867-.659 1.509-1.509 1.509-.832 0-1.491-.642-1.491-1.509zM11.172 6a.5.5 0 0 0-.499.522l.306 7a.5.5 0 0 0 .5.478h1.043a.5.5 0 0 0 .5-.478l.305-7a.5.5 0 0 0-.5-.522h-1.655z" fill="currentColor"></path></g></svg>
+                    <h3>Something went wrong</h3>
+                    <p>{{error()}}</p>
+                </div>
+            } @else {
+                @for (product of featuredProducts(); track $index) {
+                    <app-product-card [IsNew]="isNew()" [product]="product"></app-product-card>
+                }
+            }
         </div>
     </div>
 </section>

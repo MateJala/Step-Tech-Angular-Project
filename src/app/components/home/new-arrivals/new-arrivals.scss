@@ -42,6 +42,7 @@
                 @include text(var(--primary), var(--font-size-base), var(--font-weight-semibold));
                 gap: var(--spacing-xs);
                 transition: all var(--transition-base);
+                cursor: pointer;
                 &:hover {
                     gap: var(--spacing-sm);
                     color: var(--primary-hover);
@@ -58,6 +59,110 @@
                 @media (max-width: 576px) {
                     grid-template-columns: 1fr;
                 }
+            .error {
+                grid-column: 1/-1;  
+                @include flex(center);
+                flex-direction: column;
+                svg {
+                    @include size(64px, 64px);
+                    color: var(--error-color);
+                    margin-bottom: var(--spacing-xl);
+                }
+                h3 {
+                    font-size: var(--font-size-2xl);
+                    font-weight: var(--font-weight-semibold);
+                    color: var(--text-primary);
+                    margin-bottom: var(--spacing-sm);
+                }
+                p {
+                    font-size: var(--font-size-md);
+                    color: var(--text-secondary);
+                    margin-bottom: var(--spacing-xl);
+                    max-width: 500px;
+                    line-height: 1.5715;
+                    text-align: center;
+                }
+            }
         }
     }
+}
+
+
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position:  600px 0; }
+}
+%shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--bg-secondary) 25%,
+    var(--bg-tertiary) 50%,
+    var(--bg-secondary) 75%
+  );
+  background-size: 600px 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.skeleton-product-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--border-primary);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .skeleton-image {
+    @extend %shimmer;
+    width: 100%;
+    aspect-ratio: 1;
+  }
+
+  .card-content {
+    padding: var(--spacing-lg);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .card-meta {
+    display: flex;
+    gap: var(--spacing-sm);
+  }
+
+  .card-rating {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .skeleton-stars {
+    @extend %shimmer;
+    width: 80px;
+    height: 14px;
+    border-radius: var(--radius-full);
+  }
+
+  .skeleton-btn {
+    @extend %shimmer;
+    width: 100%;
+    height: var(--button-height-md);
+    border-radius: var(--radius-md);
+  }
+
+  .skeleton {
+    @extend %shimmer;
+    border-radius: var(--radius-sm);
+  }
+
+  .skeleton-line {
+    height: 12px;
+    border-radius: var(--radius-full);
+  }
+
+  .card-footer {
+    padding: 0 var(--spacing-lg) var(--spacing-lg);
+  }
 }

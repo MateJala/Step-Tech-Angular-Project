@@ -74,12 +74,12 @@
                             <div class="price-inputs">
                                 <div class="price-input">
                                     <label>Min</label>
-                                    <input type="number" placeholder="$0" [value]="minPriceQueryParams() ?? ''" (input)="onPriceChange('min', $event)">
+                                    <input type="number" min="0" placeholder="$0" [value]="minPriceQueryParams() ?? ''" (input)="onPriceChange('min', $event)">
                                 </div>
                                 <span class="price-seperator">-</span>
                                 <div class="price-input">
                                     <label>Max</label>
-                                    <input type="number" placeholder="$9999" [value]="maxPriceQueryParams() ?? ''" (input)="onPriceChange('max', $event)">
+                                    <input type="number" min="0" placeholder="$9999" [value]="maxPriceQueryParams() ?? ''" (input)="onPriceChange('max', $event)">
                                 </div>
                             </div>
                         </div>
@@ -121,7 +121,7 @@
                             </div>
                         </div>
                         <div class="toolbar-right">
-                            <span class="results-count">39 products</span>
+                            <span class="results-count">{{totalProductsCount()}} products</span>
                             <div class="sort-select-wrapper" (clickOutside)="isSelectOpen = false">
                                 <div class="sort-select" [class.has-value]="selectedLabel !== 'Sort by'" (click)="isSelectOpen = !isSelectOpen">
                                     <span [ngStyle]="{'color': isSelectOpen || !selectedValue ? '#bfbfbf' : 'rgba(0,0,0,0.85)'}">{{ selectedLabel }}</span>
@@ -169,68 +169,100 @@
                         }
                     </div>
                     <div class="products-grid">
-                        <app-product-card></app-product-card>
-                        <app-product-card></app-product-card>
-                        <app-product-card></app-product-card>
-                        <app-product-card></app-product-card>
-                        <app-product-card></app-product-card>
-                        <app-product-card></app-product-card>
-                        <app-product-card></app-product-card>
-                        <app-product-card></app-product-card>
-                        <app-product-card></app-product-card>
-                        <app-product-card></app-product-card>
-                    </div>
-                    <div class="pagination-wrapper">
-                        <div class="pagination">
-                            <ul>
-                                <li class="pagination-prev" [class.disabled]="currentPage === 1">
-                                    <button type="button" (click)="changePage(currentPage - 1)">
-                                        <svg viewBox="64 64 896 896" fill="currentColor" width="1em" height="1em">
-                                        <path d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"/>
-                                        </svg>
-                                    </button>
-                                </li>
-
-                                @for (page of totalPagesArray; track $index) {
-                                   <li
-                                       class="pagination-item"
-                                       [class.active]="page === currentPage"
-                                       (click)="changePage(page)">
-                                   <a>{{ page }}</a>
-                                   </li>
-                                }
-
-                                <li class="pagination-next" [class.disabled]="currentPage === totalPages">
-                                    <button type="button" (click)="changePage(currentPage + 1)">
-                                        <svg viewBox="64 64 896 896" fill="currentColor" width="1em" height="1em">
-                                        <path d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"/>
-                                        </svg>
-                                    </button>
-                                </li>
-
-                                <li class="pagination-options">
-                                    <div class="page-size-wrapper" (click)="$event.stopPropagation()">
-                                        <div [ngClass]="{'open' : isPageSizeOpen}" class="page-size-select" [class.has-value]="true" (click)="isPageSizeOpen = !isPageSizeOpen">
-                                            <span [ngStyle]="{'color': isPageSizeOpen ? '#bfbfbf' : 'rgba(0,0,0,0.85)'}">{{ pageSize }} / page</span>
-                                            <svg class="sort-arrow" [class.open]="isPageSizeOpen" viewBox="64 64 896 896" fill="currentColor" width="12" height="12">
-                                                <path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"/>
-                                            </svg>
-                                        </div>
-
-                                        <ul class="page-size-dropdown" [class.open]="isPageSizeOpen">
-                                        @for (size of pageSizeOptions; track $index) {
-                                            <li
-                                            (click)="selectPageSize(size)"
-                                            [class.selected]="size === pageSize">
-                                            {{ size }} / page
-                                            </li>
-                                        }
-                                        </ul>
+                        @if (isProductsLoading()) {
+                            @for (skeleton of [1,2,3,4,5,6]; track $index) {
+                                <div class="skeleton-product-card">
+                                <div class="card-image">
+                                    <div class="skeleton skeleton-image"></div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-meta">
+                                    <div class="skeleton skeleton-line" style="width: 40%"></div>
+                                    <div class="skeleton skeleton-line" style="width: 25%"></div>
                                     </div>
-                                </li>
-                            </ul>
-                        </div>
+                                    <div class="skeleton skeleton-line" style="width: 85%; height: 16px"></div>
+                                    <div class="skeleton skeleton-line" style="width: 65%; height: 16px"></div>
+                                    <div class="card-rating">
+                                    <div class="skeleton-stars"></div>
+                                    <div class="skeleton skeleton-line" style="width: 24px"></div>
+                                    </div>
+                                    <div style="margin-top: auto">
+                                    <div class="skeleton skeleton-line" style="width: 45%; height: 20px"></div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="skeleton-btn"></div>
+                                </div>
+                                </div>
+                                } 
+                            } @else {
+                                @for (product of products(); track $index) {
+                                    <app-product-card [product]="product"></app-product-card>
+                                } @empty {
+                                    <div class="no-results">
+                                        <div class="no-results-icon">
+                                            <svg _ngcontent-ng-c2652668144="" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle _ngcontent-ng-c2652668144="" cx="11" cy="11" r="8"></circle><line _ngcontent-ng-c2652668144="" x1="21" y1="21" x2="16.65" y2="16.65"></line><line _ngcontent-ng-c2652668144="" x1="8" y1="8" x2="14" y2="14"></line><line _ngcontent-ng-c2652668144="" x1="14" y1="8" x2="8" y2="14"></line></svg>
+                                        </div>
+                                        <h3>No products found</h3>
+                                        <p>Try adjusting your search or filters to find what you're looking for.</p>
+                                        <button (click)="clearFilters()">Clear Filters</button>
+                                    </div>
+                                }
+                            }
                     </div>
+                    @if (totalPages() > 0) {
+                        <div class="pagination-wrapper">
+                            <div class="pagination">
+                                <ul>
+                                    <li class="pagination-prev" [class.disabled]="currentPage() === 1">
+                                        <button type="button" (click)="changePage(currentPage() - 1)">
+                                            <svg viewBox="64 64 896 896" fill="currentColor" width="1em" height="1em">
+                                                <path d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"/>
+                                            </svg>
+                                        </button>
+                                    </li>
+    
+                                    @for (page of totalPagesArray; track $index) {
+                                        <li
+                                            class="pagination-item"
+                                            [class.active]="page === currentPage()"
+                                            (click)="changePage(page)">
+                                            <a>{{ page }}</a>
+                                        </li>
+                                    }
+    
+                                    <li class="pagination-next" [class.disabled]="currentPage() === totalPages()">
+                                        <button type="button" (click)="changePage(currentPage() + 1)">
+                                            <svg viewBox="64 64 896 896" fill="currentColor" width="1em" height="1em">
+                                                <path d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"/>
+                                            </svg>
+                                        </button>
+                                    </li>
+    
+                                    <li class="pagination-options">
+                                        <div class="page-size-wrapper" (click)="$event.stopPropagation()">
+                                            <div [ngClass]="{'open': isPageSizeOpen}" class="page-size-select" [class.has-value]="true" (click)="isPageSizeOpen = !isPageSizeOpen">
+                                                <span [ngStyle]="{'color': isPageSizeOpen ? '#bfbfbf' : 'rgba(0,0,0,0.85)'}">{{ pageSize() }} / page</span>
+                                                <svg class="sort-arrow" [class.open]="isPageSizeOpen" viewBox="64 64 896 896" fill="currentColor" width="12" height="12">
+                                                    <path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"/>
+                                                </svg>
+                                            </div>
+    
+                                            <ul class="page-size-dropdown" [class.open]="isPageSizeOpen">
+                                                @for (size of pageSizeOptions; track $index) {
+                                                    <li
+                                                        (click)="selectPageSize(size)"
+                                                        [class.selected]="size === pageSize()">
+                                                        {{ size }} / page
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    }
                 </main>
             </div>
         </div>

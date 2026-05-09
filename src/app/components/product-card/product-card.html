@@ -1,43 +1,46 @@
+
 <div class="product-card">
     <div class="card-image">
-        <img loading="lazy" src="https://elements-resized.envatousercontent.com/envato-dam-assets-production/EVA/TRX/93/e1/a7/32/3e/v1_E10/E10HJFP4.jpg?w=1600&amp;cf_fit=scale-down&amp;q=85&amp;format=auto&amp;s=069172b9bfba8175d5b57463c0496e73c867cd44973c036d51fe51af61bbc9ed" alt="Netgear Nighthawk RS700S Wi-Fi 7">
+        <img loading="lazy" [src]="product().imageUrl" [alt]="product().name" [class.out-of-stock]="isSoldOut()">
         <div class="card-badges">
+            @if (isSoldOut()) {
+                <span class="badge badge-sold-out">Sold Out</span>
+            }
             @if (IsNew()) {
                 <span class="badge badge-new">New</span>
             }
         </div>
         <div class="quick-actions">
             <button class="action-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
             </button>
-            <button class="action-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path  d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle  cx="12" cy="12" r="3"></circle></svg>
+            <button class="action-btn" [routerLink]="['/shop/product', product().id]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
             </button>
         </div>
     </div>
-    <div class="card-content" [routerLink]="['/shop/product', 1]">
+    <div class="card-content" [routerLink]="['/shop/product', product().id]">
         <div class="card-meta">
-            <span class="category">Networking</span>
-            <span class="brand">Netgear</span>
+            <span class="category">{{ product().category.name }}</span>
+            <span class="brand">{{ product().brand }}</span>
         </div>
-        <h3 class="card-title">Netgear Nighthawk RS700S Wi-Fi 7</h3>
+        <h3 class="card-title">{{ product().name }}</h3>
         <div class="card-rating">
             <div class="stars">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="star filled" fill="currentColor"><polygon  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="star filled" fill="currentColor"><polygon  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="star filled" fill="currentColor"><polygon  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="star filled" fill="currentColor"><polygon  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="star filled" fill="currentColor"><polygon  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                @for (filled of stars(); track $index) {
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" [class.filled]="filled" [attr.fill]="filled ? 'currentColor' : 'none'"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                }
             </div>
-            <span class="rating-value">5.0</span>
+            <span class="rating-value">{{ product().rating.toFixed(1) }}</span>
         </div>
         <div class="card-price">
-            <span class="current-price">USD 1,499</span>
+            <span class="current-price">USD {{ product().price | number }}</span>
         </div>
     </div>
-    <div  class="card-footer">
-        <button class="add-to-cart-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle  cx="9" cy="21" r="1"></circle><circle  cx="20" cy="21" r="1"></circle><path  d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+    <div class="card-footer">
+        <button class="add-to-cart-btn" [disabled]="isSoldOut()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
             <span>Add to Cart</span>
         </button>
     </div>

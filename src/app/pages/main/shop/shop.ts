@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProductCard } from "../../../components/product-card/product-card";
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CategoryService } from '../../../../services/categoryService';
+import { ProductService } from '../../../../services/product-service';
 
 @Component({
   selector: 'app-shop',
@@ -42,6 +43,7 @@ export class Shop implements OnInit {
           this.selectedValue = found.value;
         }
       }
+      this.fetchProducts(1);
     });
     //categories
     this.isCategoriesLoading.set(true);
@@ -54,6 +56,8 @@ export class Shop implements OnInit {
           this.isCategoriesLoading.set(false);
         }
     });
+    //products
+    this.fetchProducts(1);
   }
 
   selectRating(rating: number): void {
@@ -236,25 +240,23 @@ export class Shop implements OnInit {
     return count;
   }
 
-  public currentPage = 1;
-  public totalPages = 4;
-  public pageSize = 10;
+  private productService = inject(ProductService);
+  public currentPage = this.productService.currentPage;
+  public totalPages = this.productService.totalPages;
+  public pageSize = signal<number>(10);
   public isPageSizeOpen = false;
   public pageSizeOptions = [12, 24, 48, 10];
-
   selectPageSize(size: number): void {
-    this.pageSize = size;
+    this.pageSize.set(size);
     this.isPageSizeOpen = false;
-    this.currentPage = 1;
+    this.fetchProducts(1);
   }
-
   get totalPagesArray(): number[] {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    return Array.from({ length: this.totalPages() }, (_, i) => i + 1);
   }
-
   changePage(page: number): void {
-    if (page < 1 || page > this.totalPages) return;
-    this.currentPage = page;
+    if (page < 1 || page > this.totalPages()) return;
+    this.fetchProducts(page);
   }
 
   public mobileFilterBtn = signal<boolean>(false);
@@ -273,4 +275,40 @@ export class Shop implements OnInit {
     const match = this.categories().find(c => c.id === this.categoryQueryParams());
     return match?.name ?? null;
   });
+
+  //service variable - productService 
+  public products = this.productService.products;
+  public isProductsLoading = signal(false);
+  private fetchProducts(page: number = 1): void {
+    this.isProductsLoading.set(true);
+
+    let sortBy: string | null = null;
+    let sortDescending: boolean | null = null;
+    if (this.selectedValue === 'price-asc')  { sortBy = 'price'; sortDescending = false; }
+    if (this.selectedValue === 'price-desc') { sortBy = 'price'; sortDescending = true; }
+    if (this.selectedValue === 'name')       { sortBy = 'name';  sortDescending = false; }
+    if (this.selectedValue === 'rating')     { sortBy = 'rating'; sortDescending = true; }
+    if (this.selectedValue === 'newest')     { sortBy = 'createdAt'; sortDescending = true; }
+
+    this.productService.getProducts(page, this.pageSize(), {
+      search: this.searchQueryParams(),
+      brand: this.brandQueryParams(),
+      inStock: this.inStockQueryParams(),
+      categoryId: this.categoryQueryParams(),
+      minRating: this.minRatingQueryParams(),
+      minPrice: this.minPriceQueryParams(),
+      maxPrice: this.maxPriceQueryParams(),
+      sortBy,
+      sortDescending,
+    })
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe({
+      next: () => this.isProductsLoading.set(false),
+      error: (err) => {
+        console.error('[ProductService] Failed to fetch products:', err);
+        this.isProductsLoading.set(false);
+      }
+    });
+  }
+  public totalProductsCount = this.productService.totalProductsCount;
 }

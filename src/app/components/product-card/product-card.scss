@@ -32,6 +32,10 @@
             transition: transform var(--transition-slow);
             vertical-align: middle;
             border-style: none;
+            &.out-of-stock {
+                filter: grayscale(50%);
+                opacity: .7;
+            }
         }
         .card-badges {
             position: absolute;
@@ -51,6 +55,10 @@
             }
             .badge-new {
                 background: var(--product-badge-new);
+                color: var(--text-white);
+            }
+            .badge-sold-out {
+                background: var(--text-tertiary);
                 color: var(--text-white);
             }
         }

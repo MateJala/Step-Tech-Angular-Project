@@ -596,6 +596,54 @@
                             @media (max-width: 576px) {
                                 grid-template-columns: 1fr;
                             }
+                        .no-results {
+                            grid-column: 1 / -1;
+                            text-align: center;
+                            padding: var(--spacing-5xl) var(--spacing-xl);
+                            .no-results-icon {
+                                margin-bottom: var(--spacing-xl);
+                                color: var(--text-muted);
+                            }   
+                            h3 {
+                                font-size: var(--font-size-2xl);
+                                font-weight: var(--font-weight-semibold);
+                                color: var(--text-primary);
+                                margin-bottom: var(--spacing-sm);
+                            }
+                            p {
+                                font-size: var(--font-size-md);
+                                color: var(--text-secondary);
+                                margin-bottom: var(--spacing-xl);
+                            }
+                            button {
+                                color: #fff;
+                                border-color: #1890ff;
+                                background: #1890ff;
+                                text-shadow: 0 -1px 0 rgba(0, 0, 0, .12);
+                                box-shadow: 0 2px #0000000b;
+                                outline: 0;
+                                line-height: 1.5715;
+                                position: relative;
+                                display: inline-block;
+                                font-weight: 400;
+                                white-space: nowrap;
+                                text-align: center;
+                                border: 1px solid transparent;
+                                cursor: pointer;
+                                transition: all .3s cubic-bezier(.645, .045, .355, 1);
+                                user-select: none;
+                                touch-action: manipulation;
+                                height: 32px;
+                                padding: 4px 15px;
+                                font-size: 14px;
+                                border-radius: 2px;
+                                &:hover {
+                                    color: #fff;
+                                    border-color: #40a9ff;
+                                    background: #40a9ff;
+                                }
+                            }
+                        }
                     }
                     .pagination-wrapper {
                         display: flex;
@@ -827,4 +875,68 @@
   );
   background-size: 600px 100%;
   animation: shimmer 1.5s infinite linear;
+}
+
+.skeleton-product-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--border-primary);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .skeleton-image {
+    @extend %shimmer;
+    width: 100%;
+    aspect-ratio: 1;
+  }
+
+  .card-content {
+    padding: var(--spacing-lg);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .card-meta {
+    display: flex;
+    gap: var(--spacing-sm);
+  }
+
+  .card-rating {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .skeleton-stars {
+    @extend %shimmer;
+    width: 80px;
+    height: 14px;
+    border-radius: var(--radius-full);
+  }
+
+  .skeleton-btn {
+    @extend %shimmer;
+    width: 100%;
+    height: var(--button-height-md);
+    border-radius: var(--radius-md);
+  }
+
+  .skeleton {
+    @extend %shimmer;
+    border-radius: var(--radius-sm);
+  }
+
+  .skeleton-line {
+    height: 12px;
+    border-radius: var(--radius-full);
+  }
+
+  .card-footer {
+    padding: 0 var(--spacing-lg) var(--spacing-lg);
+  }
 }
