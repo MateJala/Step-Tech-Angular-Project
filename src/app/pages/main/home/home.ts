@@ -12,6 +12,4 @@ import { Features } from '../../../components/home/features/features';
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class Home {
-  
-}
+export class Home {}

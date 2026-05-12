@@ -18,7 +18,6 @@ export interface Product {
   canDelete: boolean;
   category: Category;
 }
-
 export interface ProductListResponse {
   data: {
     items: Product[];
@@ -28,6 +27,36 @@ export interface ProductListResponse {
     pageSize: number;
     hasMore: boolean;
   };
+}
+
+export interface ProductById {
+  id: number,
+  stock: number,
+  name: string,
+  brand: string,
+  model: string,
+  rating: number,
+  price: number,
+  imageUrl: string,
+  isFavorite: boolean,
+  description: string,
+  imageUrls: string[],
+  category: Category,
+  specifications: {
+    additionalProp1: string,
+    additionalProp2: string,
+    additionalProp3: string
+  }
+}
+export interface ProductByIdResponse {
+  data: ProductById,
+  meta: {
+    name: string,
+    description: string,
+    website: string,
+    location: string,
+    email: string
+  }
 }
 
 @Injectable({
@@ -114,5 +143,15 @@ export class ProductService {
     if (filters?.sortDescending != null) params = params.set('SortDescending', filters.sortDescending);
 
     return this.http.get<ProductListResponse>(`${this.url}products/filter`, { headers: this.headers, params });
+  }
+
+  private _productById = signal<ProductById | null>(null)
+  public productById = this._productById.asReadonly()
+  public getProduct(id: number) {
+    return this.http.get<ProductByIdResponse>(`${this.url}products/${id}`, { headers: this.headers}).pipe(
+      tap(response => {
+        this._productById.set(response.data);
+      })
+    );
   }
 }
