@@ -1,0 +1,67 @@
+<main class="profile-content">
+    <div class="content-header">
+        <div class="header-text">
+            <h1>My Favorites</h1>
+            <p>1 items saved</p>
+        </div>
+        <button class="clear-all-btn">
+            <svg _ngcontent-ng-c3678441068="" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline _ngcontent-ng-c3678441068="" points="3 6 5 6 21 6"></polyline><path _ngcontent-ng-c3678441068="" d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            <span>Clear All</span>
+        </button>
+    </div>
+    <div class="favorites-grid">
+        <div class="favorite-card">
+            <button class="remove-favorite-btn">
+                <svg _ngcontent-ng-c3678441068="" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path _ngcontent-ng-c3678441068="" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <div class="stock-badge out-of-stock">
+                OUT OF STOCK
+                <!-- class: 'low-stock' text: 'LOW STOCK' -->
+            </div>
+            <a routerLink="/shop/product/2" class="product-image">
+                <img src="https://elements-resized.envatousercontent.com/envato-dam-assets-production/EVA/TRX/97/49/0e/7d/4c/v1_E10/E105QHL0.jpeg?w=1600&cf_fit=scale-down&q=85&format=auto&s=690c271bb457b0623787ef8b73347fb1164bc4ff24206859277b4d33730aa5c5" alt="">
+            </a>
+            <div class="product-info">
+                <span class="product-brand">APPLE</span>
+                <a routerLink="/shop/product/2" class="product-name">MacBook Air 15-inch M2</a>
+                <p class="product-model">Model: MBA15-M2-2023</p>
+                <span class="product-category">
+                    <svg _ngcontent-ng-c3678441068="" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect _ngcontent-ng-c3678441068="" x="3" y="3" width="7" height="7"></rect><rect _ngcontent-ng-c3678441068="" x="14" y="3" width="7" height="7"></rect><rect _ngcontent-ng-c3678441068="" x="14" y="14" width="7" height="7"></rect><rect _ngcontent-ng-c3678441068="" x="3" y="14" width="7" height="7"></rect></svg>
+                    Laptops
+                </span>
+            </div>
+            <div class="product-footer">
+                <div class="rating-price-section">
+                    <div class="rating-row">
+                        <div class="stars">
+                            @for (filled of [1,2,3,4,5]; track $index) {
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" [class.filled]="filled" [attr.fill]="filled ? 'currentColor' : 'none'"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                </svg>
+                            }
+                        </div>
+                        <span class="rating-value">(5.0)</span>
+                    </div>
+                    <div class="price-row">
+                        <span class="price-current">USD 3,799</span>
+                    </div>
+                </div>
+                <button class="add-to-cart-btn" disabled>
+                    Out of Stock
+                    <!-- <svg _ngcontent-ng-c3678441068="" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle _ngcontent-ng-c3678441068="" cx="9" cy="21" r="1"></circle><circle _ngcontent-ng-c3678441068="" cx="20" cy="21" r="1"></circle><path _ngcontent-ng-c3678441068="" d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    Add to Cart -->
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="empty-state">
+        <div class="empty-icon">
+            <svg _ngcontent-ng-c3678441068="" xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path _ngcontent-ng-c3678441068="" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+        </div>
+        <h2>No favorites yet</h2>
+        <p>Start adding products to your favorites to see them here. Click the heart icon on any product!</p>
+        <button routerLink="/shop">
+            <svg _ngcontent-ng-c3678441068="" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle _ngcontent-ng-c3678441068="" cx="9" cy="21" r="1"></circle><circle _ngcontent-ng-c3678441068="" cx="20" cy="21" r="1"></circle><path _ngcontent-ng-c3678441068="" d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            Browse Products
+        </button>
+    </div> -->
+</main>

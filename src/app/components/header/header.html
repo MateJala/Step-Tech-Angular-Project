@@ -3,7 +3,7 @@
         <div class="content">
             <a routerLink="/" class="logo">
                 <div class="logo-icon">
-                    <svg _ngcontent-ng-c3188417508="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect _ngcontent-ng-c3188417508="" x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path _ngcontent-ng-c3188417508="" d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                 </div>
                 <span>STEP TECH</span>
             </a>
@@ -12,7 +12,7 @@
                 <a routerLink="/shop" routerLinkActive="active" class="nav-link">Shop</a>
                 <div class="nav-dropdown" (mouseleave)="hoverOver.set(false)">
                     <span class="nav-link" (mouseenter)="IsHoverable ? hoverOverCategory() : null" (click)="!IsHoverable ? hoverOverCategory() : null" >
-                        Categories <svg _ngcontent-ng-c3188417508="" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline _ngcontent-ng-c3188417508="" points="6 9 12 15 18 9"></polyline></svg>
+                        Categories <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </span>
                     @if (hoverOver()) {
                         <div class="dropdown-menu">
@@ -40,15 +40,35 @@
             </nav>
             <div class="search-bar">
                 <input (keyup.enter)="Search()" type="text" name="search-bar" placeholder="Search Products..." [formControl]="search">
-                <button (click)="clearSearch()" class="clear-search" [ngStyle]="{display: search.value?.length ? 'flex' : 'none'}"><svg _ngcontent-ng-c3188417508="" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line _ngcontent-ng-c3188417508="" x1="18" y1="6" x2="6" y2="18"></line><line _ngcontent-ng-c3188417508="" x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                <button (click)="clearSearch()" class="clear-search" [ngStyle]="{display: search.value?.length ? 'flex' : 'none'}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
             </div>
             <div class="nav-actions">
-                <a routerLink="/auth">Sign In</a>
+                @if (userExists) {
+                    <a routerLink="/profile/favorites" class="action-btn" >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        @if (favorites()?.totalCount) {
+                            <span class="badge">{{favorites()!.totalCount}}</span>
+                        }
+                    </a>
+                    <button class="cart-btn action-btn" (click)="mobileCart()">
+                        <svg _ngcontent-ng-c3188417508="" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle _ngcontent-ng-c3188417508="" cx="9" cy="21" r="1"></circle><circle _ngcontent-ng-c3188417508="" cx="20" cy="21" r="1"></circle><path _ngcontent-ng-c3188417508="" d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                        @if (cart()?.totalCount) {
+                            <span class="badge">{{cartCount()}}</span>
+                        }
+                    </button>
+                    <a routerLink="/profile" class="user-menu">
+                        <button class="action-btn user-btn">
+                            <div class="user-avatar"> {{user()!.firstName[0] + user()!.lastName[0]}} </div>
+                        </button>
+                    </a>
+                } @else {
+                    <a routerLink="/auth" class="login-btn">Sign In</a>
+                }
                 <button class="mobile-menu-btn" (click)="mobileMenu()">
                     @if (mobileMenuBtn()) {
-                        <svg _ngcontent-ng-c3188417508="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line _ngcontent-ng-c3188417508="" x1="3" y1="12" x2="21" y2="12"></line><line _ngcontent-ng-c3188417508="" x1="3" y1="6" x2="21" y2="6"></line><line _ngcontent-ng-c3188417508="" x1="3" y1="18" x2="21" y2="18"></line></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                     } @else {
-                        <svg _ngcontent-ng-c3188417508="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line _ngcontent-ng-c3188417508="" x1="18" y1="6" x2="6" y2="18"></line><line _ngcontent-ng-c3188417508="" x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     }
                 </button>
             </div>
@@ -58,8 +78,8 @@
         <nav class="mobile-nav">
             <a routerLink="/" class="mobile-nav-link" (click)="mobileMenu()">Home</a>
             <a routerLink="/shop" class="mobile-nav-link" (click)="mobileMenu()">Shop</a>
-            <div _ngcontent-ng-c3188417508="" class="mobile-categories">
-                <span _ngcontent-ng-c3188417508="" class="mobile-nav-label">Categories</span>
+            <div class="mobile-categories">
+                <span class="mobile-nav-label">Categories</span>
                 @if (isLoading()) {
                     @for (skeleton of [1,2,3,4]; track $index) {
                         <div class="mobile-nav-link sub-link skeleton-mobile-link">
@@ -81,6 +101,118 @@
             <div class="mobile-divider"></div>
             <a routerLink="/auth/login" class="mobile-nav-link" (click)="mobileMenu()">Sign In</a>
             <a routerLink="/auth/register" class="mobile-nav-link" (click)="mobileMenu()">Register</a>
+            <a routerLink="/profile" class="mobile-nav-link" (click)="mobileMenu()">My Profile</a>
+            <a routerLink="/profile/favorites" class="mobile-nav-link" (click)="mobileMenu()">Favorites</a>
+            <a routerLink="/profile/cart" class="mobile-nav-link" (click)="mobileMenu()">Cart</a>
+            <button class="logout-btn" (click)="Logout()">Logout</button>
         </nav>
     </div>
 </header>
+<div class="cart-drawer-overlay" [class.active]="!mobileCartBtn()" (click)="mobileCart()"></div>
+
+<aside class="cart-drawer" [class.open]="!mobileCartBtn()">
+
+    <div class="drawer-header" [ngStyle]="{transform: !mobileMenuBtn() ? 'translate(0)' :''}">
+        <h2>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            Shopping Cart
+            <span class="items-count">({{cartCount()}} items)</span>
+        </h2>
+        <button class="close-btn" (click)="mobileCart()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+
+    <div class="drawer-content">
+        @if (cart()!.totalCount === 0) {
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                </div>
+                <h3>Your cart is empty</h3>
+                <p>Looks like you haven't added anything to your cart yet.</p>
+                <button nz-button nzType="primary">
+                    <span>Start Shopping</span>
+                </button>
+            </div>
+        } @else {
+            <div class="cart-items">
+                @for (item of cart()?.items; track item.id) {
+                    <div class="cart-item">
+                      <div class="item-image">
+                        <img [src]="item.product.imageUrl" [alt]="item.product.name">
+                      </div>
+                  
+                      <div class="item-details">
+                        <h4 class="item-name">{{ item.product.name }}</h4>
+                        <p class="item-price">USD {{ item.price | number:'1.0-0'}}</p>
+                  
+                        <div class="item-quantity">
+                          <button class="qty-btn" [disabled]="item.quantity <= 1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                          </button>
+                          <span class="qty-value">{{ item.quantity }}</span>
+                          <button class="qty-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <line x1="12" y1="5" x2="12" y2="19"></line>
+                              <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                  
+                      <div class="item-actions">
+                        <span class="item-total">USD {{ item.totalPrice | number:'1.0-0'}}</span>
+                        <button class="remove-btn">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                }   
+            </div>
+        }
+    </div>
+    @if (cart()!.totalCount > 0) {
+        <div class="drawer-footer">
+            <div class="cart-summary">
+                <div class="summary-row">
+                <span>Subtotal</span>
+                <span>USD {{ cartTotal() | number:'1.0-0'}}</span>
+                </div>
+                <div class="summary-row total">
+                <span>Total</span>
+                <span>USD {{ cartTotal() | number:'1.0-0'}}</span>
+                </div>
+            </div>
+    
+            <div class="cart-actions">
+                <button class="cart-btn">
+                <span>View Cart</span>
+                </button>
+                <button class="checkout-btn">
+                <span>Checkout</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+                </button>
+            </div>
+        </div>
+    }
+</aside>

@@ -1,13 +1,16 @@
 import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from "@angular/router";
-import { NgStyle } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CategoryService } from '../../../services/categoryService';
+import { UserService } from '../../../services/user-service';
+import { Favorites, PaginatedResponse, Product } from '../../../services/favorites';
+import { Cart, CartItem } from '../../../services/cart';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, RouterLinkActive, ReactiveFormsModule, NgStyle],
+  imports: [RouterLink, RouterLinkActive, ReactiveFormsModule, CommonModule],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
@@ -25,6 +28,10 @@ export class Header {
   public mobileMenuBtn = signal<boolean>(true);
   mobileMenu(){
     this.mobileMenuBtn.set(!this.mobileMenuBtn())
+  }
+  public mobileCartBtn = signal<boolean>(true);
+  mobileCart(){
+    this.mobileCartBtn.set(!this.mobileCartBtn())
   }
   routerLinkCategory(id:number){
     this.router.navigate(['/shop'], { queryParams: { category: id } });
@@ -49,9 +56,24 @@ export class Header {
   public isLoading = signal(false);
   public error = signal<string | null>(null);
 
+  private userService = inject(UserService);
+  public user = this.userService.user;
+  public userExists = false;
   ngOnInit() {
+    this.userService.getUser()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.userExists = true
+          this.favoritesFunction();
+          this.cartFunction();
+        },
+        error: () => {
+          this.userExists = false;
+        }
+      });
+    
     this.isLoading.set(true);
-
     this.categoryService.getCategories()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
@@ -64,5 +86,46 @@ export class Header {
           this.isLoading.set(false);
         }
       });
+  }
+  
+  private favoritesService = inject(Favorites);
+  public favorites = signal<PaginatedResponse<Product> | null>(null);
+
+  private favoritesFunction() {
+    this.favoritesService.getFavorites(10)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res) => {
+          this.favorites.set(res.data);
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      });
+  }
+  private cartService = inject(Cart);
+  public cart = signal<PaginatedResponse<CartItem> | null>(null);
+
+  private cartFunction() {
+    this.cartService.getCart(10)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res) => {
+          this.cart.set(res.data);
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      });
+  }
+  public cartTotal = computed(() =>
+    this.cart()?.items.reduce((sum, item) => sum + item.totalPrice, 0) ?? 0
+  );
+  public cartCount = computed(() =>
+    this.cart()?.items.reduce((sum, item) => sum + item.quantity, 0) ?? 0
+  );
+
+  Logout(){
+  
   }
 }

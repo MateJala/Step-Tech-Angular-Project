@@ -1,0 +1,198 @@
+<main class="profile-content">
+    <div class="content-header">
+        <div class="header-text">
+            <h1>Account Settings</h1>
+            <p>Manage your security and account preferences</p>
+        </div>
+    </div>
+    <div class="form-card">
+        <div class="card-header">
+            <h3>
+                <svg _ngcontent-ng-c4289299587="" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect _ngcontent-ng-c4289299587="" x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path _ngcontent-ng-c4289299587="" d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                Change Password
+            </h3>
+        </div>
+        <div class="card-content">
+            <form class="password-form" (ngSubmit)="onSubmit()" [formGroup]="passwordForm"> 
+                <div class="form-grid">
+
+                    <!-- Current Password -->
+                    <div class="form-item full-width">
+                        <label class="form-label required">Current Password</label>
+                        <div class="input-wrapper"  [class.has-error]="currentPassword?.invalid && currentPassword?.touched">
+                            <span class="input-icon-svg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            </span>
+                            <input
+                            [type]="showCurrentPassword ? 'text' : 'password'"
+                            formControlName="currentPassword"
+                            placeholder="Enter your current password"
+                            class="form-input">
+                            <span class="password-toggle" (click)="showCurrentPassword = !showCurrentPassword">
+                                @if (!showCurrentPassword) {
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                } @else {
+                                    <svg _ngcontent-ng-c4289299587="" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path _ngcontent-ng-c4289299587="" d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line _ngcontent-ng-c4289299587="" x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                }
+                            </span>
+                        </div>
+                        @if (submited() || currentPassword?.errors?.['required'] && currentPassword?.touched) {
+                            <small>New password is required</small>
+                        }
+                        @if (currentPassword?.errors?.['minlength'] && currentPassword?.touched) {
+                            <small>Password must be at least 8 characters</small>
+                        }
+                    </div>
+
+                    <!-- New Password -->
+                    <div class="form-item">
+                        <label class="form-label required">New Password</label>
+                        <div class="input-wrapper" [class.has-error]="newPassword?.invalid && newPassword?.touched">
+                            <span class="input-icon-svg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            </span>
+                            <input
+                            [type]="showNewPassword ? 'text' : 'password'"
+                            formControlName="newPassword"
+                            placeholder="Enter your new password"
+                            class="form-input">
+                            <span class="password-toggle" (click)="showNewPassword = !showNewPassword">
+                                @if (!showNewPassword) {
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                } @else {
+                                    <svg _ngcontent-ng-c4289299587="" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path _ngcontent-ng-c4289299587="" d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line _ngcontent-ng-c4289299587="" x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                }
+                            </span>
+                        </div>
+                        @if (submited() || newPassword?.errors?.['required'] && newPassword?.touched) {
+                            <small>New password is required</small>
+                        }
+                        @if (newPassword?.errors?.['minlength'] && newPassword?.touched) {
+                            <small>Password must be at least 8 characters</small>
+                        }
+                    </div>
+
+                    <!-- Confirm New Password -->
+                    <div class="form-item">
+                        <label class="form-label required">Confirm New Password</label>
+                        <div class="input-wrapper" [class.has-error]="confirmPassword?.invalid && confirmPassword?.touched">
+                            <span class="input-icon-svg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            </span>
+                            <input
+                            [type]="showConfirmPassword ? 'text' : 'password'"
+                            formControlName="confirmPassword"
+                            placeholder="Confirm your new password"
+                            class="form-input">
+                            <span class="password-toggle" (click)="showConfirmPassword = !showConfirmPassword">
+                                @if (!showConfirmPassword) {
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                } @else {
+                                    <svg _ngcontent-ng-c4289299587="" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path _ngcontent-ng-c4289299587="" d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line _ngcontent-ng-c4289299587="" x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                }
+                            </span>
+                        </div>
+                        @if (submited() || confirmPassword?.errors?.['required'] && confirmPassword?.touched) {
+                            <small>Please confirm your new password</small>
+                        }
+                    </div>
+
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="submit" class="btn-save" (click)="this.submited.set(true)">
+                        <span class="btn-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </span>
+                        <span>Update Password</span>
+                    </button>
+                </div>
+            </form>
+        </div>  
+    </div>
+    <div class="form-card danger-card">
+        <div class="card-header danger-header">
+            <h3>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                Danger Zone
+            </h3>
+        </div>
+
+        <div class="card-content">
+            <div class="danger-alert">
+                <div class="alert-icon">
+                    <svg viewBox="64 64 896 896" focusable="false" fill="currentColor" width="1em" height="1em" data-icon="exclamation-circle" aria-hidden="true"><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"></path><path d="M464 688a48 48 0 1096 0 48 48 0 10-96 0zm24-112h48c4.4 0 8-3.6 8-8V296c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v272c0 4.4 3.6 8 8 8z"></path></svg>
+                </div>
+                <div class="alert-content">
+                    <span class="alert-message">Delete Account</span>
+                    <span class="alert-discription">Once you delete your account, there is no going back. Please be certain.</span>
+                </div>
+            </div>
+
+            <div class="danger-action">
+                <div class="danger-info">
+                    <h4>Delete your account</h4>
+                    <p>This will permanently delete your account, including all your data, orders, and preferences.</p>
+                </div>
+
+                <button (click)="this.deleteConfirm.set(true)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                    <span>Delete Account</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
+@if (deleteConfirm()) {
+    <div class="overlay">
+        <div class="modal">
+            <div class="modal-content">
+                <button class="close" (click)="this.deleteConfirm.set(false)">
+                    <span>
+                        <svg viewBox="64 64 896 896" focusable="false" fill="currentColor" width="1em" height="1em" data-icon="close" aria-hidden="true"><path d="M799.86 166.31c.02 0 .04.02.08.06l57.69 57.7c.04.03.05.05.06.08a.12.12 0 010 .06c0 .03-.02.05-.06.09L569.93 512l287.7 287.7c.04.04.05.06.06.09a.12.12 0 010 .07c0 .02-.02.04-.06.08l-57.7 57.69c-.03.04-.05.05-.07.06a.12.12 0 01-.07 0c-.03 0-.05-.02-.09-.06L512 569.93l-287.7 287.7c-.04.04-.06.05-.09.06a.12.12 0 01-.07 0c-.02 0-.04-.02-.08-.06l-57.69-57.7c-.04-.03-.05-.05-.06-.07a.12.12 0 010-.07c0-.03.02-.05.06-.09L454.07 512l-287.7-287.7c-.04-.04-.05-.06-.06-.09a.12.12 0 010-.07c0-.02.02-.04.06-.08l57.7-57.69c.03-.04.05-.05.07-.06a.12.12 0 01.07 0c.03 0 .05.02.09.06L512 454.07l287.7-287.7c.04-.04.06-.05.09-.06a.12.12 0 01.07 0z"></path></svg>
+                    </span>
+                </button>
+                <div class="modal-body">
+                    <div class="modal-body-wrapper">
+                        <div class="modal-confirm-body">
+                            <div class="modal-confirm-icon">
+                                <svg viewBox="64 64 896 896" focusable="false" fill="currentColor" width="1em" height="1em" data-icon="question-circle" aria-hidden="true"><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"></path><path d="M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0130.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1080 0 40 40 0 10-80 0z"></path></svg>
+                            </div>
+                            <span class="modal-confirm-title">Delete Account</span>
+                            <div class="modal-confirm-content">
+                                <div>
+                                    <p>
+                                        ⚠️ This action cannot be undone!
+                                    </p>
+                                    <p>
+                                        Deleting your account will permanently remove:
+                                    </p>
+                                    <ul>
+                                        <li>Your profile information</li>
+                                        <li>Your favorites</li>
+                                        <li>Your cart items</li>
+                                    </ul>
+                                    <p>
+                                        Are you absolutely sure you want to delete your account?
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="modal-confirm-btn">
+                                <button class="btn" (click)="this.deleteConfirm.set(false)">Cancel</button>
+                                <button class="btn delete" (click)="deleteAccount()">Yes, Delete My Account</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
