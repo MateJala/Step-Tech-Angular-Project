@@ -91,6 +91,48 @@
                 color: var(--primary);
                 transform: scale(1.1);
             }
+            &.favorited {
+              border-radius: var(--radius-full);
+              border: none;
+              background: #fffffff2;
+              -webkit-backdrop-filter: blur(10px);
+              backdrop-filter: blur(10px);
+              color: var(--error-color);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+              transition: all var(--transition-base);
+              z-index: 2;
+              box-shadow: var(--shadow-sm);
+              outline: none;
+          
+              svg {
+                transition: transform var(--transition-base);
+              }
+          
+              &:hover:not(:disabled) {
+                background: var(--error-color);
+                color: var(--text-white);
+                transform: scale(1.1);
+          
+                svg {
+                  transform: scale(1.1);
+                }
+              }
+          
+              &:disabled {
+                opacity: .6;
+                cursor: not-allowed;
+              }
+          
+              @media (max-width: 768px) {
+                width: 36px;
+                height: 36px;
+                top: var(--spacing-sm);
+                right: var(--spacing-sm);
+              }
+            }
         }
     }
     .card-content {
@@ -173,6 +215,16 @@
                 background: var(--primary);
                 border-color: var(--primary);
                 color: var(--text-white);
+            }
+            &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+                filter: grayscale(0.3);
+                &:hover {
+                    background: inherit;
+                    border-color: var(--border-secondary);
+                    color: inherit;
+                }
             }
         }
     }

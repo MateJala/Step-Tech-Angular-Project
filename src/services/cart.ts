@@ -59,4 +59,33 @@ export class Cart {
       params: { take, page: 1 }
     });
   }
+  public addToCart(productId: number, quantity: number) {
+    const headers = new HttpHeaders({
+      'X-API-KEY': environment.apiKey,
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.post(`${this.url}cart/add-to-cart`, { productId, quantity }, { headers });
+  }
+
+  public removeFromCart(itemId: number) {
+    const headers = new HttpHeaders({
+      'X-API-KEY': environment.apiKey,
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.delete(`${this.url}cart/remove-from-cart/${itemId}`, { headers });
+  }
+
+  public editQuantity(itemId: number, quantity: number) {
+    const headers = new HttpHeaders({
+      'X-API-KEY': environment.apiKey,
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.put(`${this.url}cart/edit-quantity`, { itemId, quantity }, { headers });
+  }
 }

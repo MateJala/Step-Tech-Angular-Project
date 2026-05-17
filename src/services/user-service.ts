@@ -43,4 +43,54 @@ export class UserService {
         this._user.set(response.data);
       }))
     }
+  public updateUser(body: {
+    firstName: string,
+    lastName: string,
+    email: string,
+    phoneNumber: string| null,
+    address: string | null,
+    pictureUrl: string | null,
+    dateOfBirth: string | null
+  }) {
+    const headers = new HttpHeaders({
+      'X-API-KEY': environment.apiKey,
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.put(`${this.url}users`, body, { headers });
+  }
+
+  public changePassword(body: {
+    currentPassword: string;
+    newPassword: string;
+  }) {
+    const headers = new HttpHeaders({
+      'X-API-KEY': environment.apiKey,
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.put(`${this.url}users/change-password`, body, { headers });
+  }
+
+  public deleteProfile() {
+    const headers = new HttpHeaders({
+      'X-API-KEY': environment.apiKey,
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.delete(`${this.url}users/delete-profile`, { headers });
+  }
+  
+  public checkout() {
+  const headers = new HttpHeaders({
+    'X-API-KEY': environment.apiKey,
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+  });
+
+  return this.http.post(`${this.url}users/checkout`, {}, { headers });
+}
 }

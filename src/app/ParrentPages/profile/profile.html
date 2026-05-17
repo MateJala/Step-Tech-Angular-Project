@@ -6,13 +6,16 @@
                 <div class="user-card">
                     <div class="user-avatar-wrapper">
                         <div class="user-avatar">
-                            MJ
-                            <!-- <img src="" alt="">  -->
+                        @if (user()?.details?.pictureUrl) {
+                            <img [src]="user()!.details.pictureUrl" [alt]="user()?.firstName">
+                        } @else {
+                            {{ user()?.firstName?.[0] | uppercase}}{{ user()?.lastName?.[0] | uppercase}}
+                        }
                         </div>
                     </div>
                     <div class="user-info">
-                        <h3>Mate Jalagonia</h3>
-                        <p>mjalagonia@mziuri.ge</p>
+                        <h3>{{ user()?.firstName }} {{ user()?.lastName }}</h3>
+                        <p>{{ user()?.email }}</p>
                     </div>
                 </div>
                 <div class="profile-nav">

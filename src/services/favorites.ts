@@ -59,4 +59,23 @@ export class Favorites {
       params: { take, page: 1 }
     });
   }
+  public addFavorite(productId: number) {
+    const headers = new HttpHeaders({
+      'X-API-KEY': environment.apiKey,
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.post(`${this.url}favorites/${productId}`, {}, { headers });
+  }
+
+  public removeFavorite(productId: number) {
+    const headers = new HttpHeaders({
+      'X-API-KEY': environment.apiKey,
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.delete(`${this.url}favorites/${productId}`, { headers });
+  }
 }
