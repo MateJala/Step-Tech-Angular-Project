@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, signal, DestroyRef, OnInit } from '@angular/core';
+import { Component, computed, inject, input, signal, DestroyRef, OnInit, effect } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Product } from '../../../services/product-service';
 import { CommonModule } from '@angular/common';
@@ -13,16 +13,21 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrl: './product-card.scss',
 })
 export class ProductCard implements OnInit {
+  public isFavoriteInput = input<boolean>(false);
+  public isFavorited = signal(false);
+  constructor() {
+    effect(() => {
+      this.isFavorited.set(this.isFavoriteInput());
+    });
+  }
   private router = inject(Router);
   private cartService = inject(CartService);
   private favoritesService = inject(FavoritesService);
   private destroyRef = inject(DestroyRef);
-
   public product = input.required<Product>();
   public IsNew = input<boolean>(false);
   public isSoldOut = computed(() => this.product().stock === 0);
   public isUpdating = signal(false);
-  public isFavorited = signal(false);
 
   public stars = computed(() => {
     const rating = this.product().rating;
@@ -76,6 +81,6 @@ export class ProductCard implements OnInit {
       });
   }
   ngOnInit() {
-    this.isFavorited.set(this.product().isFavorite);
+    this.isFavorited.set(this.isFavoriteInput());
   }
 }

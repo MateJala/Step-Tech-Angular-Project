@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserService } from '../../../../services/user-service';
 import Swal from 'sweetalert2';
+import { CommonModule } from '@angular/common';
 
 function getFormErrors(form: FormGroup): string {
   const messages: string[] = [];
@@ -21,7 +22,7 @@ function getFormErrors(form: FormGroup): string {
 
 @Component({
   selector: 'app-profile-main',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './profile-main.html',
   styleUrl: './profile-main.scss',
 })

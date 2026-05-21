@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ProductCard } from '../../product-card/product-card';
 import { Product, ProductService } from '../../../../services/product-service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Favorites } from '../../../../services/favorites';
 
 @Component({
   selector: 'app-new-arrivals',
@@ -40,7 +41,22 @@ export class NewArrivals implements OnInit{
         }
       });
     }
+    private favoritesService = inject(Favorites)
+      public favoritedIds = signal<number[]>([]);
+      loadFavorites() {
+        if (!localStorage.getItem('access_token')) return;
+        
+        this.favoritesService.getFavorites(100)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe({
+            next: (res) => {
+              const ids = res.data.items.map(p => p.id);
+              this.favoritedIds.set(ids);
+            }
+          });
+      }
     ngOnInit(): void {
       this.fetchProducts(1)
+      this.loadFavorites()
     }
 }

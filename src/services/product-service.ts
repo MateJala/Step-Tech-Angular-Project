@@ -29,27 +29,29 @@ export interface ProductListResponse {
   };
 }
 
-export interface ProductById {
-  id: number,
-  stock: number,
-  name: string,
-  brand: string,
-  model: string,
-  rating: number,
-  price: number,
-  imageUrl: string,
-  isFavorite: boolean,
-  description: string,
-  imageUrls: string[],
-  category: Category,
-  specifications: {
-    additionalProp1: string,
-    additionalProp2: string,
-    additionalProp3: string
-  }
+export interface ProductDetail {
+  id: number;
+  stock: number;
+  name: string;
+  brand: string;
+  model: string;
+  rating: number;
+  price: number;
+  imageUrl: string;
+  isFavorite: boolean;
+  description: string;
+  imageUrls: string[];
+  category: Category;
+  specifications: { [key: string]: string };
 }
+
+export interface ProductDetailResponse {
+  data: ProductDetail;
+  meta: {};
+}
+
 export interface ProductByIdResponse {
-  data: ProductById,
+  data: ProductDetail,
   meta: {
     name: string,
     description: string,
@@ -145,7 +147,7 @@ export class ProductService {
     return this.http.get<ProductListResponse>(`${this.url}products/filter`, { headers: this.headers, params });
   }
 
-  private _productById = signal<ProductById | null>(null)
+  private _productById = signal<ProductDetail | null>(null)
   public productById = this._productById.asReadonly()
   public getProduct(id: number) {
     return this.http.get<ProductByIdResponse>(`${this.url}products/${id}`, { headers: this.headers}).pipe(

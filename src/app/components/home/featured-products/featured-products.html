@@ -42,7 +42,7 @@
                 </div>
             } @else {
                 @for (product of featuredProducts(); track $index) {
-                    <app-product-card [product]="product"></app-product-card>
+                    <app-product-card [product]="product" [isFavoriteInput]="favoritedIds().includes(product.id)"></app-product-card>
                 }
             }
         </div>

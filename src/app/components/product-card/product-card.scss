@@ -108,7 +108,8 @@
               outline: none;
           
               svg {
-                transition: transform var(--transition-base);
+                fill: var(--error-color);
+                transition: all var(--transition-base);
               }
           
               &:hover:not(:disabled) {
@@ -117,7 +118,8 @@
                 transform: scale(1.1);
           
                 svg {
-                  transform: scale(1.1);
+                    fill: var(--text-white);
+                    transform: scale(1.1);
                 }
               }
           

@@ -3,6 +3,7 @@ import { ProductCard } from '../../product-card/product-card';
 import { RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Product, ProductService } from '../../../../services/product-service';
+import { Favorites } from '../../../../services/favorites';
 
 @Component({
   selector: 'app-featured-products',
@@ -35,7 +36,22 @@ export class FeaturedProducts implements OnInit{
       }
     });
   }
+  private favoritesService = inject(Favorites)
+  public favoritedIds = signal<number[]>([]);
+  loadFavorites() {
+    if (!localStorage.getItem('access_token')) return;
+    
+    this.favoritesService.getFavorites(100)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res) => {
+          const ids = res.data.items.map(p => p.id);
+          this.favoritedIds.set(ids);
+        }
+      });
+  }
   ngOnInit(): void {
     this.fetchProducts(1)
+    this.loadFavorites()
   }
 }

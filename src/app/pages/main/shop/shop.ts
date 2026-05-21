@@ -5,6 +5,7 @@ import { ProductCard } from "../../../components/product-card/product-card";
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CategoryService } from '../../../../services/categoryService';
 import { ProductService } from '../../../../services/product-service';
+import { Favorites } from '../../../../services/favorites';
 
 @Component({
   selector: 'app-shop',
@@ -25,6 +26,7 @@ export class Shop implements OnInit {
   public brandQueryParams = signal<string | null>(null);
 
   ngOnInit() {
+    this.loadFavorites();
     //params
     this.route.queryParams.subscribe(params => {
       this.searchQueryParams.set(params['search'] ?? null);
@@ -311,4 +313,20 @@ export class Shop implements OnInit {
     });
   }
   public totalProductsCount = this.productService.totalProductsCount;
+
+  private favoritesService = inject(Favorites);
+  public favoritedIds = signal<number[]>([]);
+
+  // call this after user is confirmed logged in
+  loadFavorites() {
+    if (!localStorage.getItem('access_token')) return;
+    
+    this.favoritesService.getFavorites(100)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res) => {
+          this.favoritedIds.set(res.data.items.map(p => p.id));
+        }
+      });
+  }
 }

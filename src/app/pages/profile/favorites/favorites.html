@@ -57,7 +57,7 @@
                     </svg>
                   }
                 </div>
-                <span class="rating-value">({{ product.rating }})</span>
+                <span class="rating-value">({{ product.rating.toFixed(1) }})</span>
               </div>
               <div class="price-row">
                 <span class="price-current">USD {{ product.price | number:'1.0-0' }}</span>
