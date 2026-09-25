@@ -36,7 +36,10 @@ The project includes a product-based shopping experience and uses an API to prov
 
 ## Preview
 
-screenshots of the application here. (soon)
+<img width="1899" height="630" alt="image" src="https://github.com/user-attachments/assets/c6056529-0764-44d6-8b8c-6075dc47216b" />
+<img width="1902" height="789" alt="image" src="https://github.com/user-attachments/assets/e67a253d-3c7e-44dd-9387-860d4ffb1421" />
+<img width="1891" height="948" alt="image" src="https://github.com/user-attachments/assets/de68603c-263c-4359-82be-f2e4d065ef8f" />
+
 
 ## Project
 
